@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const Book = require('./models/book');
 
 const app = express();
 
@@ -17,7 +18,9 @@ app.use((req, res, next) => {
   });
 
 app.get('/api/books', (req, res, next) => {
-    
+    Book.find()
+    .then(books => res.status(200).json(thing))
+    .catch(error => res.status(400).json({error}));
     next();
   });
 
