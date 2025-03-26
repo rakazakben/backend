@@ -17,11 +17,10 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
     next();
   });
-app.get(`/api/books/:id`, (req, res, next) => {
+app.get(`/api/books/:id`, (req, res) => {
     Book.findOne({_id : req.params.id})
     .then(book => res.status(200).json(book))
     .catch(error => res.status(400).json(error));
-    next();
   });
 app.get('/api/books', (req, res) => {
     Book.find()
