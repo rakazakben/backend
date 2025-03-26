@@ -60,13 +60,18 @@ app.post(`/api/books/:id/rating`, (req, res, next) => {
     
     next();
   });
-app.put(`/api/books/:id`, (req, res, next) => {
-    
-    next();
+app.put(`/api/books/:id`, (req, res) => {
+    if (!req.body) {
+        return res.status(400).json({ message: " Aucune donnée envoyée." });
+    }
+    Book.updateOne({ _id: req.params.id }, { ...req.body })
+    .then(() => res.status(200).json({ message: 'livre modifié !'}))
+    .catch(error => res.status(400).json({ error }));
   });
-app.delete(`/api/books/:id`, (req, res, next) => {
-    
-    next();
+app.delete(`/api/books/:id`, (req, res) => {
+    Book.deleteOne({ _id: req.params.id })
+    .then(() => res.status(200).json({ message: 'livre supprimé !'}))
+    .catch(error => res.status(400).json({ error }));
   });
 
 /*app.use((req, res) => {
