@@ -1,7 +1,7 @@
 const Book = require('../models/book');
 
 exports.createBook = (req, res) => {
-    console.log("Requête reçue avec body :", req.body); // Debugging
+    console.log("Requête reçue avec body :", req.body); //à retirer
 
     if (!req.body) {
         return res.status(400).json({ message: " Aucun contenu reçu" });
@@ -39,14 +39,13 @@ exports.editBook =  (req, res) => {
 
 exports.deleteBook = (req, res) => {
     Book.deleteOne({ _id: req.params.id })
-    .then(() => res.status(200).json({ message: 'livre supprimé !'}))
+    .then(() => res.status(200).json({ message: 'livre supprimé !'}))//revoir les codes status
     .catch(error => res.status(400).json({ error }));
   };
 
-exports.getBestrating = (req, res) => {
-    Book.deleteOne({ _id: req.params.id })
-    .then(() => res.status(200).json({ message: 'livre supprimé !'}))
-    .catch(error => res.status(400).json({ error }));
+exports.getBestrating = (req, res, next) => {
+    
+    next();
   };
 
 exports.getRating =  (req, res, next) => {
