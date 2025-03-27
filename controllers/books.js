@@ -49,7 +49,7 @@ exports.getBestrating = (req, res, next) => {
     next();
   };
 
-exports.getRating =  (req, res, next) => {
+exports.Rating =  (req, res, next) => {
     
     next();
   };
