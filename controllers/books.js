@@ -9,7 +9,8 @@ exports.createBook = (req, res) => {
 
     delete req.body._id;
     const book = new Book({
-      ...req.body
+      ...req.body,
+      userId: req.auth.userId
     });
     book.save()
       .then(() => res.status(201).json({ message: 'Objet enregistré !'}))
