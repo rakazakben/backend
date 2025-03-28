@@ -6,14 +6,17 @@ exports.createBook = (req, res) => {
     if (!req.body) {
         return res.status(400).json({ message: " Aucun contenu reçu" });
     }
-
-    delete req.body._id;
+    const bookObject = JSON.parse(req.body.book);
+    delete bookObject._id;
+    delete bookObject.userId;
+    
     const book = new Book({
-      ...req.body,
-      userId: req.auth.userId
+      ...bookObject,
+      userId: req.auth.userId,
+      imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     });
     book.save()
-      .then(() => res.status(201).json({ message: 'Objet enregistré !'}))
+      .then(() => res.status(201).json({ message: 'livre enregistré !'}))
       .catch(error => res.status(400).json({ error }));
   };
 
