@@ -18,14 +18,9 @@ const compressImage = async (req, res, next) => {
   if (!req.file) return next(); // Si aucun fichier, passe à la suite
 
   try {
-      //const extension = MIME_TYPES[req.file.mimetype] || 'jpg'; // Format par défaut
       const fileName = `compressed-${Date.now()}.webp`;
       const outputPath = path.join(__dirname, '../images', fileName);
 
-      // Vérifier si le dossier existe, sinon le créer
-      /*if (!fs.existsSync(path.join(__dirname, '../images'))) {
-          fs.mkdirSync(path.join(__dirname, '../images'), { recursive: true });
-      }*/
 
       // Compression avec Sharp
       await sharp(req.file.buffer)
