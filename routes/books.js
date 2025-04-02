@@ -9,8 +9,8 @@ const router = express.Router();
 router.get(`/bestrating`, bookController.getBestrating);
 router.get(`/:id`, bookController.getBook);
 router.get('/', bookController.getAllBooks);
-router.post(`/`, auth, multer, bookController.createBook);
-router.put(`/:id`, auth, multer, bookController.editBook);
+router.post(`/`, auth,multer.upload, multer.compressImage, bookController.createBook);
+router.put(`/:id`, auth, multer.upload,multer.compressImage, bookController.editBook);
 router.delete(`/:id`, auth, bookController.deleteBook);
 
 router.post(`/:id/rating`,auth, bookController.Rating);
