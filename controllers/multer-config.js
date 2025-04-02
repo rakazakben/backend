@@ -11,7 +11,7 @@ const MIME_TYPES = {
   // Utilisation de memoryStorage() pour stocker temporairement en mémoire
 const storage = multer.memoryStorage(); 
 
-const upload = multer({ storage }).single('image')
+const upload = multer({ storage }).single('image');
 
 // Middleware pour traiter et compresser l'image avec Sharp
 const compressImage = async (req, res, next) => {
@@ -23,9 +23,9 @@ const compressImage = async (req, res, next) => {
       const outputPath = path.join(__dirname, '../images', fileName);
 
       // Vérifier si le dossier existe, sinon le créer
-      if (!fs.existsSync(path.join(__dirname, '../images'))) {
+      /*if (!fs.existsSync(path.join(__dirname, '../images'))) {
           fs.mkdirSync(path.join(__dirname, '../images'), { recursive: true });
-      }
+      }*/
 
       // Compression avec Sharp
       await sharp(req.file.buffer)
@@ -46,16 +46,3 @@ const compressImage = async (req, res, next) => {
 };
 
 module.exports = { upload, compressImage };
-  /*
-  const storage = multer.diskStorage({
-    destination: (req, file, callback) => {
-      callback(null, 'images');
-    },
-    filename: (req, file, callback) => {
-      const name = file.originalname.split(' ').join('_');
-      const extension = MIME_TYPES[file.mimetype];
-      callback(null, name + Date.now() + '.' + extension);
-    }
-  });
-  
-  module.exports = multer({storage: storage}).single('image');*/
