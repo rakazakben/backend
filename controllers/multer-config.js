@@ -29,7 +29,7 @@ const compressImage = async (req, res, next) => {
 
       // Compression avec Sharp
       await sharp(req.file.buffer)
-          .resize(800) // Redimensionne l'image à 800px de large max
+          .resize(500) // Redimensionne l'image à 800px de large max
           .toFormat('webp') // Convertit en WebP pour une meilleure compression
           .webp({ quality: 80 }) // Compression avec une qualité de 80%
           .toFile(outputPath); // Sauvegarde l'image traitée
