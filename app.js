@@ -1,14 +1,16 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
+require('dotenv').config({ path: './config.env' });
 
 const booksRoutes = require('./routes/books');
 const authRoutes = require('./routes/auth');
+const dbLink = process.env.DB_LINK;
 
 const app = express();
 app.use(express.json()); 
 
-mongoose.connect('mongodb+srv://rakazakben:QsmtmZQ7L3mntk8r@cluster0.igwdz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0',
+mongoose.connect(dbLink,
     { useNewUrlParser: true,
       useUnifiedTopology: true })
     .then(() => console.log('Connexion à MongoDB réussie !'))

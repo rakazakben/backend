@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const jwtKey = process.env.JWT_SECRET
 
 module.exports = (req, res, next) => {
     try{
@@ -7,7 +8,7 @@ module.exports = (req, res, next) => {
             return res.status(401).json({ message: " Aucun token fourni !" });
         }
         const token = authHeader.split(' ')[1];
-        const decodedToken = jwt.verify(token, 'c86d6055bd3897fdd410a9e521e6c07c3db06c72d2ac76ae1e9682ebd7568a96');
+        const decodedToken = jwt.verify(token, jwtKey);
         const userId = decodedToken.userId;
         req.auth = {
             userId: userId

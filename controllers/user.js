@@ -2,6 +2,8 @@ const User = require('../models/user');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
+const jwtKey = process.env.JWT_SECRET
+
 exports.signup = (req, res, next) => {
     bcrypt.hash(req.body.password, 10)
     .then(hash => {
@@ -33,7 +35,7 @@ exports.login = (req, res, next) => {
                         userId: user._id,
                         token: jwt.sign(
                             {userId : user._id},
-                            'c86d6055bd3897fdd410a9e521e6c07c3db06c72d2ac76ae1e9682ebd7568a96',
+                            jwtKey,
                             { expiresIn: '24h'}
                         )
                     });
