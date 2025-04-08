@@ -27,7 +27,7 @@ Avant d'installer le projet, assurez-vous d'avoir installé :
 
 ## Configuration
 
-Créez un fichier `.env` à la racine du projet avec le contenu suivant :
+Créez un fichier `config.env` à la racine du projet avec le contenu suivant :
 
 ```env
 # Lien de connexion MongoDB
