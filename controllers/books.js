@@ -22,6 +22,7 @@ exports.createBook = (req, res) => {
   };
 
 exports.getBook = (req, res) => {
+
     Book.findOne({_id : req.params.id})
     .then(book => res.status(200).json(book))
     .catch(error => res.status(400).json(error));
@@ -40,7 +41,7 @@ exports.editBook =  (req, res) => {
     const bookObject = req.file ? {
         ...JSON.parse(req.body.book),
         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-    } : { ...req.body };
+    } : { ...req.body };//à retirer
     
     delete bookObject.userId;
     Book.findOne({_id: req.params.id})
@@ -110,7 +111,10 @@ exports.getBestrating = (req, res, next) => {
   };
 
 exports.Rating =  (req, res, next) => {
-    const { userId, rating } = req.body; // Récupérer l'ID utilisateur et la note
+    // const { userId, rating } = req.body; // Récupérer l'ID utilisateur et la note
+    delete req.body.userId;
+    const userId= req.auth.userId;
+    const rating = req.body.rating;
 
     if (!userId || rating === undefined) {
         return res.status(400).json({ message: "userId et rating sont requis." });
@@ -139,7 +143,7 @@ exports.Rating =  (req, res, next) => {
             // Calculer la nouvelle moyenne des notes
             const totalRatings = book.ratings.length;
             const sumRatings = book.ratings.reduce((acc, r) => acc + r.grade, 0);
-            book.averageRating = sumRatings / totalRatings;
+            book.averageRating = Number((sumRatings / totalRatings).toFixed(1)); //correction des nombres significatifs
 
             // Sauvegarder le livre mis à jour
             return book.save();
